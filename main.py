@@ -4,11 +4,11 @@ from src.player import Player
 from src.table import Table
 
 max_seats = 6
-small_blind = 5
-big_blind = 10
+small_blind = 1
+big_blind = 2
 antes = 0
 table = Table(max_seats, small_blind, big_blind, antes)
-player1 = Player("aaron")
+player1 = Player("p1")
 player2 = Player("p2")
 player3 = Player("p3")
 player4 = Player("p4")

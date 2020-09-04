@@ -2,6 +2,7 @@
 # This class represents a single poker hand - the state of 1 round of the game
 # This class will also be used to generate hand histories
 from src.pot import Pot
+from src.deck import Deck
 
 
 class Hand:
@@ -10,56 +11,78 @@ class Hand:
     river = []  # fifth card
     community = []
 
-    def __init__(self, table, deck, dealer_index):
+    def __init__(self, table, deck, dealer_index, players):
         self.table = table
-        self.deck = deck
+        self._deck = deck
         self.dealer_index = dealer_index
-        self.pot = Pot(self.table, self.table)
-        pass
+        self.players = players
+        self.pot = Pot(self.table, self.players)
+
+    @property
+    def deck(self):
+        return self._deck
 
     def end_hand(self):
-        # award pot to winner, shift dealer, check if players stood up/sat down?
+        # award pot to winner, record hand
         pass
 
     def play_hand(self):
         self.collect_blinds(self.dealer_index)
-        self.deck().shuffle()
-        self.deal_cards(self.deck(), self.dealer_index)
-        # preflop, flop and turn should return true if the hand has ended on that street due to folds
-        if self.preflop():
-            # award pot to winner, shift dealer, see if any players have stood up/sat down
-            # allthis^stuff()
-            self.end_hand()
-        if self.flop():
-            # award pot to winner, shift dealer, see if any players have stood up/sat down
-            # allthis^stuff()
-            self.end_hand()
-        if self.turn():
-            # award pot to winner, shift dealer, see if any players have stood up/sat down
-            # allthis^stuff()
-            self.end_hand()
-        if self.river():
-            # award pot to winner, shift dealer, see if any players have stood up/sat down
-            # allthis^stuff()
-            self.end_hand()
-        self.showdown()
+        self.stack_sizes()
+        self.deck.shuffle()
+        self.deal_cards()
 
+        self.return_cards()
+        # preflop, flop and turn should return true if the hand has ended on that street due to folds
+        #if self.preflop():
+            # award pot to winner, shift dealer, see if any players have stood up/sat down
+            # allthis^stuff()
+        #    self.end_hand()
+        #if self.flop():
+            # award pot to winner, shift dealer, see if any players have stood up/sat down
+            # allthis^stuff()
+        #    self.end_hand()
+        #if self.turn():
+            # award pot to winner, shift dealer, see if any players have stood up/sat down
+            # allthis^stuff()
+        #    self.end_hand()
+        #if self.river():
+            # award pot to winner, shift dealer, see if any players have stood up/sat down
+            # allthis^stuff()
+        #    self.end_hand()
+        #self.showdown()
+
+
+    def stack_sizes(self):
+        for p in self.players:
+            print(p.name + ': ' + str(p.stack_size))
 
     def collect_blinds(self, dealer_index):
-        if self.table.num_seated() < 2:
+        self.pot.collect_blinds()
+        #if self.table.num_seated() < 2:
             # game cannot continue yet
-            pass
-        elif self.table.num_seated() == 2:
+        #    pass
+        #elif self.table.num_seated() == 2:
             # heads up case - dealer is small blind
-            pass
-        else:
+        #    pass
+        #else:
             # player left of dealer is small blind, left of that is big blind
-            pass
+        #    pass
 
 
-    def deal_cards(self, deck, dealer_index):
-        # dealing starts to left of dealer
-        pass
+    def deal_cards(self):
+        for c in range(2):
+            for p in self.players:
+                p.get_card(self.deck.get_card())
+        self.print_cards()
+
+    def return_cards(self):
+        for p in self.players:
+            p.return_cards()
+
+    def print_cards(self):
+        for p in self.players:
+            print(p.name + ':  (' + str(p.hole_cards[0]) + ', ' + str(p.hole_cards[1]) + ')')
 
 
     def preflop(self, deck, dealer_index):

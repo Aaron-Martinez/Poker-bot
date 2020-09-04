@@ -11,7 +11,6 @@ class Table:
         self._small_blind = small_blind
         self._big_blind = big_blind
         self._antes = antes
-        self.deck = Deck()
         self._seats = []
         for i in range(1, max_seats+1):
             seat = Seat(i)
@@ -30,7 +29,7 @@ class Table:
         return self._seats
 
     def get_seat(self, seat_num):
-        print("getting seat " + str(seat_num) + " at seats[" + str(seat_num-1) + "]")
+        #print("getting seat " + str(seat_num) + " at seats[" + str(seat_num-1) + "]")
         return self.seats[seat_num-1]
 
     @property

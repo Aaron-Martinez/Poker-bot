@@ -7,13 +7,13 @@ class Deck:
 
     def __init__(self):
         self.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-        self.suits = ['hearts', 'diamonds', 'spades', 'clubs']
+        self.suits = ['h', 'd', 's', 'c']
         self.suit_color = {'hearts': 'red', 'diamonds': 'red', 'spades': 'black', 'clubs': 'black'}
         self.deck = []
         self._create_deck()
-        pass
 
     def _create_deck(self):
+        print('creating the deck')
         for suit in self.suits:
             color = self.suit_color.get(suit)
             for rank in self.ranks:
