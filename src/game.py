@@ -34,8 +34,6 @@ class Game:
     def dealer_seat_num(self, seat_num):
         self._dealer_seat_num = seat_num
 
-    players = []
-
     def run(self):
         # todo: add conditions for game to continue (game not stopped by user) and set game_continues
         first_dealer_num = 1
@@ -46,9 +44,10 @@ class Game:
         while game_continues:
             hand = self.initialize_hand(self.dealer_seat_num)
             hand.play_hand()
+            hand.end_hand()
 
             handsPlayed += 1
-            if handsPlayed >= 3:
+            if handsPlayed >= 1:
                 game_continues = False
 
             self.dealer_seat_num = self.move_dealer(self.dealer_seat_num)
@@ -58,6 +57,7 @@ class Game:
     def initialize_hand(self, dealer_seat):
         print('\n----------- Initializing new hand -----------')
         #self.debug_print_players(dealer_seat)
+        print('deck size = ' + str(self.deck.deck_size))
         players = self.initialize_players(dealer_seat)
         hand = Hand(self.table, self.deck, dealer_seat, players)
         return hand
@@ -74,7 +74,7 @@ class Game:
                 if self.table.get_seat(i).active_player():
                     players.append(self.table.get_seat(i).get_player())
             i += 1
-        positions = [' SB', ' BB', 'UTG', ' HJ', ' CO', ' BU']
+        positions = ['SB', 'BB', 'UTG', 'HJ', 'CO', 'BU']
         if len(players) < 6:
             positions.remove('UTG')
         if len(players) < 5:

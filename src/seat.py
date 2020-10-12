@@ -63,4 +63,4 @@ class Seat:
         self.player = player
         self.has_player = True
         self.is_sitting = True
-        print("sitting player " + player.name)
+        #print("sitting player " + player.name)

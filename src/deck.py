@@ -26,6 +26,9 @@ class Deck:
     def get_card(self):
         return self.deck.pop()
 
+    def return_card(self, card):
+        self.deck.append(card)
+
     @property
     def deck_size(self):
         return len(self.deck)
