@@ -6,9 +6,11 @@ import random
 class Deck:
 
     def __init__(self):
-        self.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+        #self.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+        self.ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         self.suits = ['h', 'd', 's', 'c']
         self.suit_color = {'hearts': 'red', 'diamonds': 'red', 'spades': 'black', 'clubs': 'black'}
+        self._suit_key = {'s': 0, 'h': 1, 'd': 2, 'c': 3}
         self.deck = []
         self._create_deck()
 
@@ -33,3 +35,6 @@ class Deck:
     def deck_size(self):
         return len(self.deck)
 
+    @property
+    def suit_key(self):
+        return self._suit_key

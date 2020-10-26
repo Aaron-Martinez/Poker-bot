@@ -15,6 +15,7 @@ class Player:
         self._street_investment = 0
         self._hand_investment = 0
         self._is_folded = False
+        self._can_raise = True
 
     @property
     def stack_size(self):
@@ -67,6 +68,14 @@ class Player:
     def is_folded(self, folded):
         self._is_folded = folded
 
+    @property
+    def can_raise(self):
+        return self._can_raise
+
+    @can_raise.setter
+    def can_raise(self, r):
+        self._can_raise = r
+
     # the amount of chips invested by this player on the current street
     @property
     def street_investment(self):
@@ -109,7 +118,6 @@ class Player:
         self.hole_cards = []
 
 
-    # todo: this function will differ between human and AI players - move it later
     def action(self, total_bet, raise_amount, big_blind, closing_action):
         # get legal actions first
         action_str = input('Player ' + self.name + ' action: ')
@@ -168,6 +176,7 @@ class HumanPlayer(Player):
         self._street_investment = 0
         self._hand_investment = 0
         self._is_human = True
+        self._can_raise = True
 
     def action(self, total_bet, raise_amount, big_blind, closing_action):
         action_prompt = Debug.create_action_prompt(self)
@@ -179,7 +188,7 @@ class HumanPlayer(Player):
         return self._is_human
 
 
-
+# AI that will simply take random actions on every turn
 class RandomComputerPlayer(Player):
 
     def __init__(self, name):
@@ -191,6 +200,7 @@ class RandomComputerPlayer(Player):
         self._street_investment = 0
         self._hand_investment = 0
         self._is_human = False
+        self._can_raise = True
 
     def action(self, total_bet, raise_amount, big_blind, closing_action):
         # take a random action from legal options

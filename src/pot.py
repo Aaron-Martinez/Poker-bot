@@ -1,3 +1,4 @@
+from src.debug import Debug
 
 class Pot:
 
@@ -36,19 +37,26 @@ class Pot:
         for p in self.players:
             print(p.name + ': ' + p.stack_size)
 
-    def collect_blinds(self):
+    def fold_player(self, player):
+        self.players.remove(player)
+
+    def collect_blinds(self, hand_log):
         #self.pot_size()
         print('*** collecting blinds ***')
         if self.players[0].stack_size <= self.table.small_blind:
+            hand_log.add_str(Debug.log_str_blinds_allin(self.players[0]) + '\n')
             self.total = self.total + self.players[0].stack_size
             self.players[0].move_all_in()
         else:
+            hand_log.add_str(Debug.log_str_post_sb(self.players[0], self.table.small_blind) + '\n')
             self.players[0].invest_chips(self.table.small_blind)
             self.total = self.total + self.table.small_blind
         if self.players[1].stack_size <= self.table.big_blind:
+            hand_log.add_str(Debug.log_str_blinds_allin(self.players[1]) + '\n')
             self.total = self.total + self.players[1].stack_size
             self.players[1].move_all_in
         else:
+            hand_log.add_str(Debug.log_str_post_bb(self.players[1], self.table.big_blind) + '\n')
             self.players[1].invest_chips(self.table.big_blind)
             self.total = self.total + self.table.big_blind
         #self.pot_size()
