@@ -1,0 +1,24 @@
+.DS_Store
+.idea
+.vscode
+
+# CMake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+TestTestfile.cmake
+Testing/
+TestTestfile.cmake
+CTestTestfile.cmake
+eval_tests
+
+# Artifacts
+build/
+libskpokereval.a
+lib
+SKConfig.h
+*.o
+
+
